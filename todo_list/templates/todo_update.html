@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+{% block 'title' %} {{ title }} {% endblock %}
+
+{% block 'container %}
+<div class="container">
+
+    <a class="navbar-brand" href="{% url 'todo_list' %}">
+        <h1 class="text-center mt-5">Alterar Tarefa</h1>
+    </a>
+
+    <main class="">
+
+        {% include 'messages.html' %}
+
+        <form action="{% url 'todo_update' todo.id %}" method="POST">
+            {% csrf_token %}
+
+            <div class="row mt-2 mb-3">
+
+                <section class="col-sm-1 my-1">
+                    <span>ID</span>
+                    <input type="text" value="{{ todo.id }}" class="form-control" disabled name="id">
+                </section>
+
+                <section class="col-sm-11 my-1">
+                    <span>Description</span>
+                    <input type="text" value="{{ todo.description }}" class="form-control" name="description">
+                </section>
+
+            </div>
+
+            <div class="row mt-2 mb-3">
+
+                <section class="col-sm-6 my-1">
+                    <span>Category</span>
+                    <select class="form-control" name="category">
+                        <option value="{{ todo.category }}">{{ todo.get_category_display }}</option>                
+                        <option value="T">Trabalho</option>
+                        <option value="E">Estudo</option>
+                        <option value="L">Lazer</option>
+                    </select>
+                </section>
+
+                <section class="col-sm-6 my-1">
+                    <span>Status</span>
+                    <select class="form-control" name="status">
+                        <option value="{{ todo.status }}">{{ todo.get_status_display }}</option>                           
+                        <option value="N">Não Iniciada</option>
+                        <option value="E">Em Andamento</option>
+                        <option value="F">Finalizada</option>
+                    </select>
+                </section>
+
+            </div>
+
+            <div class="row mt-2 mb-3">
+
+                <section class="col-sm-2 my-1">
+                    <input type="submit" class="btn btn-success px-5" value="Alterar Tarefa"></input>
+                </section>
+
+                <section class="col-sm-2 my-1">
+                    <a href="{% url 'todo_list' %}" type="submit" class="btn btn-warning mx-5 px-5">Voltar</a>
+                </section>
+
+            </div>
+
+        </form>
+        
+    </main>
+    
+</div>
+
+{% endblock %}

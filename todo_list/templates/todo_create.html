@@ -1,0 +1,27 @@
+<form action="{% url 'todo_create' %}" method="POST">
+    {% csrf_token %}
+
+    <div class="row mt-2 mb-3">
+
+        <section class="col-sm-6 my-1">
+            <span>Descrição</span>
+            <input type="text" placeholder="" class="form-control" name="description">
+        </section>
+
+        <section class="col-sm-3 my-1">
+            <span>Categoria</span>
+            <select class="form-control" name="category">                                
+                <option value="T">Trabalho</option>
+                <option value="E">Estudo</option>
+                <option value="L">Lazer</option>
+            </select>
+        </section>
+
+        <section class="col-sm-2 my-1">
+            <span>.</span>
+            <input type="submit" class="btn btn-success px-5" value="Adicionar Nova Tarefa"></input>
+        </section>
+
+    </div>
+
+</form>

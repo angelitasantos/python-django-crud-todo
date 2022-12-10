@@ -1,0 +1,15 @@
+.status-bloco {
+    margin-left: 20px;
+}
+
+.status-vermelho {
+    color: red;
+}
+
+.status-amarelo {
+    color: yellow;
+}
+
+.status-verde {
+    color: green;
+}

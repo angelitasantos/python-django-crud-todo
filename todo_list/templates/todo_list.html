@@ -1,0 +1,99 @@
+{% extends 'base.html' %}
+{% block 'title' %} {{ title }} {% endblock %}
+
+{% load static %}
+{% block 'head' %}
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}"> 
+{% endblock %}
+
+{% block 'container %}
+<div class="container">
+
+    <a class="navbar-brand" href="{% url 'todo_list' %}">
+        <h1 class="text-center mt-5">Lista de Tarefas</h1>
+    </a>
+
+    <header class="mb-2">
+
+        {% include 'todo_create.html' %}
+
+        {% include 'messages.html' %}
+        
+        <form action="{% url 'todo_list' %}" method="GET">
+            {% csrf_token %}
+
+            <div class="row">
+                
+                <section class="col-sm-6 my-1">
+                    <input type="text" placeholder="Buscar Tarefa" class="form-control" name="description">
+                </section>
+
+                <section class="col-sm-2 my-1">
+                    <select class="form-control" name="category">
+                        <option value="">Categoria</option>
+                        <option value="T">Trabalho</option>
+                        <option value="E">Estudo</option>
+                        <option value="L">Lazer</option>
+                    </select>
+                </section>
+
+                <section class="col-sm-2 my-1">
+                    <select class="form-control" name="status">
+                        <option value="">Status</option>
+                        <option value="N">Não Iniciada</option>
+                        <option value="E">Em Andamento</option>
+                        <option value="F">Finalizada</option>
+                    </select>
+                </section>
+                
+                <section class="col-sm-2 my-1">
+                    <input type="submit" value="FILTRAR" class="btn btn-outline-success px-5">
+                </section>
+
+            </div>
+        </form>
+
+    </header>
+
+    <main class="mb-5">
+
+        <table class="table table-responsive table-sm table-hover">
+            
+            <thead class="table-dark">
+                <tr>
+                    <th>ID</th>
+                    <th>Descrição</th>
+                    <th class="text-center">Categoria</th>
+                    <th class="text-center">Status</th>
+                    <th>Edit</th>
+                    <th>Del</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for todo in todos %}
+                <tr>
+                    <td>{{ todo.id }}</td>
+                    <td>{{ todo.description }}</td>
+                    <td class="text-center">{{ todo.get_category_display }}</td>
+                    <td class="text-center status-bloco">{{ todo.icon }} {{ todo.get_status_display }}</td>
+                    <td>
+                        <a class="btn btn-sm btn-warning" href="{% url 'todo_view' todo.id %}">
+                            <i class="fa fa-edit"></i></a>
+                    </td>
+                    <td>
+                        <a class="btn btn-sm btn-danger" href="{% url 'todo_delete' todo.id %}"
+                            onclick="return confirm('Você tem certeza que deseja excluir esta tarefa ?')">
+                            <i class="fa fa-trash"></i></a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+
+        </table>
+        
+    </main>
+    
+</div>
+
+{% endblock %}
